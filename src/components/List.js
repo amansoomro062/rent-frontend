@@ -19,7 +19,19 @@ class List extends Component {
       super();
       this.getPersonList();
       this.selectProduct = this.selectProduct.bind(this); 
+      this.deletePerson = this.deletePerson.bind(this); 
+    }
 
+    deletePerson = async (id) => {        
+      try {
+          let data = await api.delete(`/api/v1/person/${id}`).then(({ data }) => data);
+          // this.setState({ products: data })
+          console.log(data);
+          this.getPersonList();
+          alert("Product has been deleted!!!!!");
+      } catch (err) {
+          console.log(err);
+      }
     }
 
     selectProduct() {
@@ -60,7 +72,7 @@ class List extends Component {
              <td>{p.lastname}</td>
              <td>{p.cnic}</td>
              <td>
-               <button className="btn btn-danger">
+               <button className="btn btn-danger" onClick={()=> this.deletePerson(p.Id)}>
                  Delete
                </button>
              </td>
