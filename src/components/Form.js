@@ -4,16 +4,18 @@ import axios from 'axios';
 class Form extends Component {
 
     state= {
-      g_bill  : '',
-      e_bill : '',
-      collected_rent  : '',
-      amount_cllection : '',
-      aggreement_end_date : '',
-      aggreement_start_date : '',
-      rent_total : '',
+      firstname : '',
+      phone_no: '',
+      receipt_no: '',
       cnic : '',
-      lastname : '',
-      firstname : ''
+      rent_total : '',
+      aggreement_start_date : '',
+      aggreement_end_date : '',
+      amount_cllection_month : '',
+      collected_rent  : '',
+      g_bill  : 0,
+      e_bill : 0,
+      isBill: false,
     }
   
     handleSubmit(event) {
@@ -24,12 +26,13 @@ class Form extends Component {
         g_bill  : this.state.g_bill,
         e_bill : this.state.e_bill,
         collected_rent  : this.state.collected_rent,
-        amount_cllection : this.state.amount_cllection,
+        amount_cllection_month : this.state.amount_cllection_month,
         aggreement_end_date : this.state.aggreement_end_date,
         aggreement_start_date : this.state.aggreement_start_date,
         rent_total : this.state.rent_total,
         cnic : this.state.cnic,
-        lastname : this.state.lastname,
+        phone_no : this.state.phone_no,
+        receipt_no: this.state.receipt_no,
         firstname : this.state.firstname,
       }
       
@@ -61,12 +64,18 @@ class Form extends Component {
   resetForm(){  
     alert("saved");
   }
+    handleBillCheckbox(event) {
+      this.setState({isBill: event.target.checked});
+    }
     onFirstNameChange(event) {
       this.setState({firstname: event.target.value });
     }
 
-    onLastNameChange(event) {
-      this.setState({lastname: event.target.value});
+    onReceiptNoChange(event) {
+      this.setState({receipt_no: event.target.value});
+    }
+    onPhoneNoChange(event) {
+      this.setState({phone_no: event.target.value});
     }
     onCnicChange(event){
       this.setState({cnic: event.target.value});
@@ -81,7 +90,7 @@ class Form extends Component {
       this.setState({aggreement_start_date: event.target.value});
     }
     onAmountCllectionChange(event) {
-      this.setState({amount_cllection: event.target.value});
+      this.setState({amount_cllection_month: event.target.value});
     }
     onCollectedRentChange(event){
       this.setState({collected_rent: event.target.value});
@@ -118,10 +127,20 @@ class Form extends Component {
               </div>
             </div>
             <div className="col-md-6 mb-3">
-              <label for="lastName">Last name  <span className="text-muted">(Optional)</span></label>
-              <input type="text" className="form-control" required="required" value={this.state.lastname} onChange={this.onLastNameChange.bind(this)} id="lastName" placeholder="lastName"/>
+              <label for="lastName">Phone Number  <span className="text-muted"></span></label>
+              <input type="number" className="form-control" required="required" value={this.state.phone_no} onChange={this.onPhoneNoChange.bind(this)} id="phone" placeholder="Phone number"/>
               <div className="invalid-feedback">
-                Valid last name is required.
+                Valid phone is required.
+              </div>
+            </div>
+          </div>
+
+          <div className="mb-3">
+            <label for="receiptno">Receipt No</label>
+            <div className="input-group">
+              <input type="number" className="form-control" required="required" value={this.state.receipt_no} onChange={this.onReceiptNoChange.bind(this)}id="username" placeholder="Enter Receipt" required=""/>
+              <div className="invalid-feedback" >
+                receipt no is required.
               </div>
             </div>
           </div>
@@ -140,7 +159,7 @@ class Form extends Component {
           <div className="mb-3">
             <label for="text">Fix the Rent</label>
             <div className="input-group">
-              <input type="text" className="form-control" required="required" value={this.state.rent_total} onChange={this.onRentTotalChange.bind(this)} id="frtext" placeholder="Rent Fix" required=""/>
+              <input type="number" className="form-control" required="required" value={this.state.rent_total} onChange={this.onRentTotalChange.bind(this)} id="frtext" placeholder="Rent Fix" required=""/>
               <div className="invalid-feedback" >
                 Please specify some amount!
               </div>
@@ -165,7 +184,7 @@ class Form extends Component {
 
           <div className="mb-3">
             <label for="Date">Amount Collection Month</label>
-            <input type="Date" className="form-control" required="required" value={this.state.amount_cllection} onChange={this.onAmountCllectionChange.bind(this)} id="EDate" placeholder="mm/dd/yyyy" required=""/>
+            <input type="Date" className="form-control" required="required" value={this.state.amount_cllection_month} onChange={this.onAmountCllectionChange.bind(this)} id="EDate" placeholder="mm/dd/yyyy" required=""/>
             <div className="invalid-feedback">
               Please please provide Agreement end date!
             </div>
@@ -175,33 +194,43 @@ class Form extends Component {
           <div className="mb-3">
             <label for="text">Rent paid</label>
             <div className="input-group">
-              <input type="text" className="form-control" required="required" value={this.state.collected_rent} onChange={this.onCollectedRentChange.bind(this)} id="rtext" placeholder="paid rent"/>
+              <input type="number" className="form-control" required="required" value={this.state.collected_rent} onChange={this.onCollectedRentChange.bind(this)} id="rtext" placeholder="paid rent"/>
               <div className="invalid-feedback">
                 Please specify some amount!
               </div>
             </div>
           </div>
 
+              <input type="checkbox"  onChange={this.handleBillCheckbox.bind(this)} />&nbsp;Bill     
+
+              {this.state.isBill &&
+              <div>
           <div className="mb-3">
-            <label for="text">Electricity bill</label>
-            <div className="input-group">
-              <input type="text" className="form-control" required="required" value={this.state.e_bill} onChange={this.onEbillChange.bind(this)} id="etext" placeholder="E-Bill"/>
-              <div className="invalid-feedback" >
-                Please specify some amount!
-              </div>
+          <label for="text">Electricity bill</label>
+          <div className="input-group">
+            <input type="number" className="form-control" required="required" value={this.state.e_bill} onChange={this.onEbillChange.bind(this)} id="etext" placeholder="E-Bill"/>
+            <div className="invalid-feedback" >
+              Please specify some amount!
             </div>
           </div>
+        </div>
 
-          <div className="mb-3">
-            <label for="text">Gas Bill</label>
-            <div className="input-group">
-              <input type="text" className="form-control" required="required" value={this.state.g_bill} onChange={this.onGbillChange.bind(this)} id="gtext" placeholder="paid rent"/>
-              <div className="invalid-feedback" >
-                Please specify some amount!
-              </div>
+        <div className="mb-3">
+          <label for="text">Gas Bill</label>
+          <div className="input-group">
+            <input type="number" className="form-control" required="required" value={this.state.g_bill} onChange={this.onGbillChange.bind(this)} id="gtext" placeholder="paid rent"/>
+            <div className="invalid-feedback" >
+              Please specify some amount!
             </div>
           </div>
+        </div>
 
+              </div>
+
+          
+          
+          }
+          
           <hr className="mb-4"/>
           <button className="btn btn-primary btn-lg btn-block" type="submit">Save</button>
         </form>

@@ -6,6 +6,8 @@ import Footer from './components/Footer';
 import Form from './components/Form';
 import List from './components/List';
 
+import Edit from './components/Edit';
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -45,6 +47,9 @@ function App() {
         </section>
 </main>
           <Switch>
+            <Route path="/edit" component={Edit}>
+
+            </Route>
             <Route path="/new">
               <Form />
             </Route>
